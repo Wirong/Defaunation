@@ -11,7 +11,7 @@ source("Abbrev.r")
 #-----------------------------------
 # Read all data (and X,Y) of the third census
 All_T <- read.csv("Data/Trees2010.csv") 
-All_T$X0 <- All_T$X-300 # The first colum is 15, thus we have to substract by 300
+
 
 #Select out trees with wrong point of measurement (6 cm/year is impossible!!)
 All_T <-subset(All_T,dbh.C3-All_T$dbh.C2<=30)
