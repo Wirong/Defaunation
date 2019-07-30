@@ -59,7 +59,7 @@ defauanSimWSG.bins = function(DM1,Bin1,Bin2){
     Res[i]=AGB_Sim 
     
   }
-  return(AGB_Sim)
+  return(Res)
 }
 
 #Function: the defuanation for all size classes
