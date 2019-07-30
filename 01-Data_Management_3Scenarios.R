@@ -9,7 +9,7 @@
 #'==================================================
 rm(list=ls(all=TRUE))
 setwd("F:/Research2016/Tree Architecture/WoodDensity/Codes/manuscript_Revised/Aug2018/") #******change directery
-source("sources/Abbrev.r")
+source("sources/Abbrev.r") #This is a function to make an abbreviated name
 
 #-----------------------------------
 # Read all data (and X,Y) of the third census in 2010
@@ -48,10 +48,10 @@ All_Disp <- read.csv("Data/MST_Combined_Meta_Jan2017.csv")
 #remove STERLA because there was not in any census data  
 All_Disp <- All_Disp[which(All_Disp$mnemonic!="STERLA"),]
 
-#Nephelium has very low chance to be dispersed by terrestial frugivores, they are seed predators
+#Nephelium has very low chance to be dispersed by terrestial frugivores (e.g. deer), and they tend to be seed predators
 All_Disp$Terr.Mamm[All_Disp$Species=="Nephelium melliferum"] <- ""
 
-#WSG from Khao Yai from Patcharin's project (unpublished data) in secondary forests
+#WSG from Khao Yai from Patcharin's project (unpublished data) in secondary forests 
 WSG_KY = read.csv("Data/Patcharin_WSG_data.csv")
 #find median
 WSG_KY2 <-tapply(WSG_KY$WSG,WSG_KY$Species,median)
@@ -61,16 +61,17 @@ WSG_KY2 <-tapply(WSG_KY$WSG,WSG_KY$Species,median)
 #Add more species to large-bodied dispesal modes
 #because species with larger seed size have very little chance
 #to be dispersed by smaller animals
-#information of seed size comes from Kitamura et al. 2002
+#information of seed size comes from Kitamura et al. 2002 (see the full referene in the paper)
 AddSpp<- c("Aglaia lawii", "Dysoxylum cyrtobotryum", "Polyalthia simiarum","Prunus javanica", "Eugenia siamensis")
 
 #So we removed those species from the smaller birds
 All_Disp$small.bird[All_Disp$Species%in%AddSpp] <- rep("",length(AddSpp))
 #------------------------------------------
 #Function for classification  
-#Classify seed dispersal modes without any redundancy
+#Classify seed dispersal modes without any redundancy between 
+#Tree dispesed by large-bodied frugivores and the others
 #L means the defauantion of large bodied frugrivores clasffied
-#O means the others excluding L (including wind-dispersed species)
+#O means the others excluding L (but including wind-dispersed species)
 #
 #------------------------------------------
   #All large frugivores defaunated: 
@@ -144,9 +145,9 @@ All_T_WSG$WSG[All_T_WSG$Sci_Name=="Ixora nigricans "]= 0.597818
 #with the same numbers of individual dispersed by all large-bodied frugivores
 NumL = which(All_T_WSG$DM_All=="L")
 
-#New column the control scenario
+#Create a new column of the control scenario
 All_T_WSG$DM_Cont = "O"
-#Randomly insert "L"
+#Randomly insert "L" as the same number as that trees dispersed by L
 Rand_L = sample(nrow(All_T_WSG),length(NumL), replace=F)
 All_T_WSG$DM_Cont[Rand_L] = "L"
 
