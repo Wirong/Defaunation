@@ -10,9 +10,10 @@ SimT = 200
 #Intensity of defuanation leavel
 Frac <- seq(.2:1,by=.2)
 
+#Read file
 All_T <- read.csv("All_T_WSG_MoreDM.csv")
  
-# Consider only tree with dbh>5 cm according to the calculation by Chave et al. (2005)
+# Consider only trees with dbh>5 cm according to the calculation of AGB by Chave et al. (2005)
 All_T <- subset(All_T,dbh.C3 >=5 & dbh.C3 <185)
 
 
@@ -51,7 +52,7 @@ defauanSimWSG.bins = function(DM1,Bin1,Bin2){ #e.g. DM1= All_Disp$DM_All,etc.
       sum(mapply(AGB,All_NL$dbh.C3,All_NL$WSG))  
     Res[i]=AGB_Sim 
   }
-  return(AGB_Sim)
+  return(Res)
 }
 
 #Function: the defuanation for all size classes
